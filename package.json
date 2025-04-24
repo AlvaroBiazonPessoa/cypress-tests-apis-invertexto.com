@@ -1,0 +1,23 @@
+{
+  "name": "cypress-tests-apis-invertexto.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlvaroBiazonPessoa/cypress-tests-apis-invertexto.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlvaroBiazonPessoa/cypress-tests-apis-invertexto.com/issues"
+  },
+  "homepage": "https://github.com/AlvaroBiazonPessoa/cypress-tests-apis-invertexto.com#readme",
+  "devDependencies": {
+    "cypress": "^14.3.2"
+  }
+}
