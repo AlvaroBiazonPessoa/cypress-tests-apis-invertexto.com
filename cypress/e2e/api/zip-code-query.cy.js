@@ -28,4 +28,16 @@ describe('ZIP Code Query API', () => {
             })
     })
 
+    it('Returns ZIP code data without authentication', () => {
+        const httpMethod = 'GET'
+        const failOnStatusCode = false
+        const zipCode = '09691000'
+        const allUrl = `cep/${zipCode}`
+        const httpStatusUnauthorized = 401
+        cy.api_returnZipCodeDataWithoutAuthentication(httpMethod, allUrl, failOnStatusCode)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusUnauthorized)
+            })
+    })
+
 })
