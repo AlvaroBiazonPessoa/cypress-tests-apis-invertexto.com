@@ -5,6 +5,6 @@ Cypress.Commands.add('api_returnZipCodeData', (method, url, failOnStatusCode, au
         failOnStatusCode: failOnStatusCode,
         headers: {
             Authorization: authorization
-        },
+        }
     })
 })
