@@ -8,3 +8,11 @@ Cypress.Commands.add('api_returnZipCodeData', (method, url, failOnStatusCode, au
         }
     })
 })
+
+Cypress.Commands.add('api_returnZipCodeDataWithoutAuthentication', (method, url, failOnStatusCode) => {
+    cy.request({
+        method: method,
+        url: url,
+        failOnStatusCode: failOnStatusCode
+    })
+})
