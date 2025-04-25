@@ -53,4 +53,17 @@ describe('ZIP Code Query API', () => {
             })
     })
 
+    it('Returns ZIP code data without authorization', () => {
+        const failOnStatusCode = false
+        const apiToken = Cypress.env('TOKEN_ONLY_FOR_THE_QR_CODE_GENERATOR_API')
+        const authorization = `Bearer ${apiToken}`
+        const zipCode = '09691000'
+        const url = endpointCep + zipCode
+        const httpStatusForbidden = 403
+        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusForbidden)
+            })
+    })
+
 })
