@@ -1,6 +1,7 @@
 describe('ZIP Code Query API', () => {
 
     const httpMethodGet = 'GET'
+    const httpStatusUnauthorized = 401
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
         const unexpectedHttpMethod = 'POST'
@@ -33,7 +34,6 @@ describe('ZIP Code Query API', () => {
         const failOnStatusCode = false
         const zipCode = '09691000'
         const allUrl = `cep/${zipCode}`
-        const httpStatusUnauthorized = 401
         cy.api_returnZipCodeDataWithoutAuthentication(httpMethodGet, allUrl, failOnStatusCode)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnauthorized)
@@ -46,7 +46,6 @@ describe('ZIP Code Query API', () => {
         const authorization = `Bearer ${invalidApiToken}`
         const zipCode = '09691000'
         const allUrl = `cep/${zipCode}`
-        const httpStatusUnauthorized = 401
         cy.api_returnZipCodeData(httpMethodGet, allUrl, failOnStatusCode, authorization)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnauthorized)
