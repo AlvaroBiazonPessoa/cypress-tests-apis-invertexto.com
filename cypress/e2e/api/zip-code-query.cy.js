@@ -40,4 +40,17 @@ describe('ZIP Code Query API', () => {
             })
     })
 
+    it('Returns zip code data with an invalid token', () => {
+        const failOnStatusCode = false
+        const invalidApiToken = Cypress.env('INVALID_TOKEN')
+        const authorization = `Bearer ${invalidApiToken}`
+        const zipCode = '09691000'
+        const allUrl = `cep/${zipCode}`
+        const httpStatusUnauthorized = 401
+        cy.api_returnZipCodeData(httpMethodGet, allUrl, failOnStatusCode, authorization)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusUnauthorized)
+            })
+    })
+
 })
