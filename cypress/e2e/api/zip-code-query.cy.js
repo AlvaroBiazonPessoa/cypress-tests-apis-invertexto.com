@@ -41,7 +41,7 @@ describe('ZIP Code Query API', () => {
             })
     })
 
-    it('Returns zip code data with an invalid token', () => {
+    it('Returns ZIP code data with an invalid token', () => {
         const failOnStatusCode = false
         const invalidApiToken = Cypress.env('INVALID_TOKEN')
         const authorization = `Bearer ${invalidApiToken}`
