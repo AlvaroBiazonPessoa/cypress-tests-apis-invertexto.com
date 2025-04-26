@@ -55,9 +55,14 @@ describe('ZIP Code Query API', () => {
         const zipCode = '09691000'
         const url = endpointCep + zipCode
         const httpStatusForbidden = 403
+        const statusTextForbidden = 'Forbidden'
+        const messageForbidden = 'Este token não pode chamar a API cep.'
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusForbidden)
+                expect(response.statusText).to.eq(statusTextForbidden)
+                expect(response.body).to.have.property(messageObject)
+                expect(response.body.message).to.eq(messageForbidden)
             })
     })
 
