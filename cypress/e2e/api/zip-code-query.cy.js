@@ -15,9 +15,11 @@ describe('ZIP Code Query API', () => {
         const zipCode = '09691000'
         const url = endpointCep + zipCode
         const httpStatusNotAllowed = 405
+        const statusTextNotAllowed = 'Method Not Allowed'
         cy.api_returnZipCodeData(unexpectedHttpMethod, url, failOnStatusCode, authorization)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusNotAllowed)
+                expect(response.statusText).to.eq(statusTextNotAllowed)
             })
     })
 
