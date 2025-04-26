@@ -10,6 +10,7 @@ describe('ZIP Code Query API', () => {
     const httpStatusUnprocessableEntity = 422
     const statusTextUnprocessableEntity = 'Unprocessable Entity'
     const messageUnprocessableEntity = 'O campo cep é obrigatório.'
+    let message = ''
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
         const unexpectedHttpMethod = 'POST'
@@ -83,6 +84,21 @@ describe('ZIP Code Query API', () => {
                 expect(response.statusText).to.eq(statusTextUnprocessableEntity)
                 expect(response.body).to.have.property(messageObject)
                 expect(response.body.message).to.eq(messageUnprocessableEntity)
+            })
+    })
+
+    it('Return ZIP code data by sending a ZIP code with less than eight digits', () => {
+        const apiToken = Cypress.env('TOKEN_FOR_ALL_APIS')
+        const authorization = `Bearer ${apiToken}`
+        const zipCode = '0969000'
+        const url = endpointCep + zipCode
+        message = 'O campo cep deve conter 8 caracteres.'
+        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusUnprocessableEntity)
+                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.body).to.have.property(messageObject)
+                expect(response.body.message).to.eq(message)
             })
     })
 
