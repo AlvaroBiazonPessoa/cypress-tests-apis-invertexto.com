@@ -4,6 +4,9 @@ describe('ZIP Code Query API', () => {
     const httpMethodGet = 'GET'
     let failOnStatusCode = false
     const httpStatusUnauthorized = 401
+    const statusTextUnauthorized = 'Unauthorized'
+    const messageObject = 'message'
+    const massageUnauthenticated = 'Unauthenticated.'
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
         const unexpectedHttpMethod = 'POST'
@@ -24,6 +27,9 @@ describe('ZIP Code Query API', () => {
         cy.api_returnZipCodeDataWithoutAuthentication(httpMethodGet, url, failOnStatusCode)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnauthorized)
+                expect(response.statusText).to.eq(statusTextUnauthorized)
+                expect(response.body).to.have.property(messageObject)
+                expect(response.body.message).to.eq(massageUnauthenticated)
             })
     })
 
@@ -35,6 +41,9 @@ describe('ZIP Code Query API', () => {
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnauthorized)
+                expect(response.statusText).to.eq(statusTextUnauthorized)
+                expect(response.body).to.have.property(messageObject)
+                expect(response.body.message).to.eq(massageUnauthenticated)
             })
     })
 
