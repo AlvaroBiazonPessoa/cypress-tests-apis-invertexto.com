@@ -7,6 +7,9 @@ describe('ZIP Code Query API', () => {
     const statusTextUnauthorized = 'Unauthorized'
     const messageObject = 'message'
     const massageUnauthenticated = 'Unauthenticated.'
+    const httpStatusUnprocessableEntity = 422
+    const statusTextUnprocessableEntity = 'Unprocessable Entity'
+    const messageUnprocessableEntity = 'O campo cep é obrigatório.'
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
         const unexpectedHttpMethod = 'POST'
@@ -66,15 +69,20 @@ describe('ZIP Code Query API', () => {
             })
     })
 
+    /**
+     * Observation: Check if the HTTP status code should be 400 instead of 422
+     */
     it('Return ZIP code data without sending ZIP code parameter', () => {
         const apiToken = Cypress.env('TOKEN_FOR_ALL_APIS')
         const authorization = `Bearer ${apiToken}`
         const zipCode = null
         const url = endpointCep + zipCode
-        const httpStatusUnprocessableEntity = 422
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
+                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.body).to.have.property(messageObject)
+                expect(response.body.message).to.eq(messageUnprocessableEntity)
             })
     })
 
