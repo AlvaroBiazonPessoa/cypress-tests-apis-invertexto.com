@@ -18,18 +18,6 @@ describe('ZIP Code Query API', () => {
             })
     })
 
-    it('Return ZIP code data without sending ZIP code parameter', () => {
-        const apiToken = Cypress.env('TOKEN_FOR_ALL_APIS')
-        const authorization = `Bearer ${apiToken}`
-        const zipCode = null
-        const url = endpointCep + zipCode
-        const httpStatusUnprocessableEntity = 422
-        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
-            .then((response) => {
-                expect(response.status).to.eq(httpStatusUnprocessableEntity)
-            })
-    })
-
     it('Returns ZIP code data without authentication', () => {
         const zipCode = '09691000'
         const url = endpointCep + zipCode
@@ -59,6 +47,18 @@ describe('ZIP Code Query API', () => {
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusForbidden)
+            })
+    })
+
+    it('Return ZIP code data without sending ZIP code parameter', () => {
+        const apiToken = Cypress.env('TOKEN_FOR_ALL_APIS')
+        const authorization = `Bearer ${apiToken}`
+        const zipCode = null
+        const url = endpointCep + zipCode
+        const httpStatusUnprocessableEntity = 422
+        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorization)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusUnprocessableEntity)
             })
     })
 
