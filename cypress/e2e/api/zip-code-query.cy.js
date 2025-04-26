@@ -2,11 +2,11 @@ describe('ZIP Code Query API', () => {
 
     const endpointCep = 'cep/' 
     const httpMethodGet = 'GET'
+    let failOnStatusCode = false
     const httpStatusUnauthorized = 401
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
         const unexpectedHttpMethod = 'POST'
-        const failOnStatusCode = false
         const apiToken = Cypress.env('TOKEN_FOR_ALL_APIS')
         const authorization = `Bearer ${apiToken}`
         const zipCode = '09691000'
@@ -19,7 +19,6 @@ describe('ZIP Code Query API', () => {
     })
 
     it('Return ZIP code data without sending ZIP code parameter', () => {
-        const failOnStatusCode = false
         const apiToken = Cypress.env('TOKEN_FOR_ALL_APIS')
         const authorization = `Bearer ${apiToken}`
         const zipCode = null
@@ -32,7 +31,6 @@ describe('ZIP Code Query API', () => {
     })
 
     it('Returns ZIP code data without authentication', () => {
-        const failOnStatusCode = false
         const zipCode = '09691000'
         const url = endpointCep + zipCode
         cy.api_returnZipCodeDataWithoutAuthentication(httpMethodGet, url, failOnStatusCode)
@@ -42,7 +40,6 @@ describe('ZIP Code Query API', () => {
     })
 
     it('Returns ZIP code data with an invalid token', () => {
-        const failOnStatusCode = false
         const invalidApiToken = Cypress.env('INVALID_TOKEN')
         const authorization = `Bearer ${invalidApiToken}`
         const zipCode = '09691000'
@@ -54,7 +51,6 @@ describe('ZIP Code Query API', () => {
     })
 
     it('Returns ZIP code data without authorization', () => {
-        const failOnStatusCode = false
         const apiToken = Cypress.env('TOKEN_ONLY_FOR_THE_QR_CODE_GENERATOR_API')
         const authorization = `Bearer ${apiToken}`
         const zipCode = '09691000'
