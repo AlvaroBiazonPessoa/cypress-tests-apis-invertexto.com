@@ -91,7 +91,6 @@ describe('ZIP Code Query API', () => {
     it('Return ZIP code data by sending a ZIP code with less than eight digits', () => {
         const zipCode = '4002000'
         const url = endpointCep + zipCode
-        const missingCharacterFieldMessage = 'O campo cep deve conter 8 caracteres.'
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
