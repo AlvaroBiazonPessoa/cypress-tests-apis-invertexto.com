@@ -11,6 +11,7 @@ describe('ZIP Code Query API', () => {
     const massageUnauthenticated = 'Unauthenticated.'
     const httpStatusUnprocessableEntity = 422
     const statusTextUnprocessableEntity = 'Unprocessable Entity'
+    const missingCharacterFieldMessage = 'O campo cep deve conter 8 caracteres.'
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
         const HttpMethodPost = 'POST'
@@ -91,6 +92,21 @@ describe('ZIP Code Query API', () => {
         const zipCode = '4002000'
         const url = endpointCep + zipCode
         const missingCharacterFieldMessage = 'O campo cep deve conter 8 caracteres.'
+        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusUnprocessableEntity)
+                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.body).to.have.property(messageObject)
+                expect(response.body.message).to.eq(missingCharacterFieldMessage)
+            })
+    })
+
+    /**
+     * Observation: Check if the HTTP status code should be 400 instead of 422
+     */
+    it('Returns ZIP code data by sending a ZIP code with more than eight digits', () => {
+        const zipCodeWithMoreThanEightDigits = '590202000'
+        const url = endpointCep + zipCodeWithMoreThanEightDigits
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
