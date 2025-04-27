@@ -1,5 +1,5 @@
 # **CYPRESS TESTS APIS INVERTETEXTO.COM**
-Work in progress...
+Repository contains tests for [invertexto.com](https://api.invertexto.com/) APIs.
 
 ## 🛠 Built with 
 * **Cypress** - Testing framework
