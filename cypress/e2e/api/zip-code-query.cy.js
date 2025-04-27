@@ -89,8 +89,8 @@ describe('ZIP Code Query API', () => {
      * Observation: Check if the HTTP status code should be 400 instead of 422
      */
     it('Return ZIP code data by sending a ZIP code with less than eight digits', () => {
-        const zipCode = '4002000'
-        const url = endpointCep + zipCode
+        const zipCodeWithLessThanEightDigits = '4002000'
+        const url = endpointCep + zipCodeWithLessThanEightDigits
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
