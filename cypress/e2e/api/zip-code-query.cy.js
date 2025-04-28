@@ -14,12 +14,12 @@ describe('ZIP Code Query API', () => {
     const missingCharacterFieldMessage = 'O campo cep deve conter 8 caracteres.'
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
-        const HttpMethodPost = 'POST'
+        const httpMethodPost = 'POST'
         const zipCode = '01001000'
         const url = endpointCep + zipCode
         const httpStatusNotAllowed = 405
         const statusTextNotAllowed = 'Method Not Allowed'
-        cy.api_returnZipCodeData(HttpMethodPost, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(httpMethodPost, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusNotAllowed)
                 expect(response.statusText).to.eq(statusTextNotAllowed)
