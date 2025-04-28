@@ -115,4 +115,20 @@ describe('ZIP Code Query API', () => {
             })
     })
 
+    /**
+     * Observation: Check if the HTTP status code should be 400 instead of 422
+     */
+    it('Return ZIP code data by sending an invalid ZIP code', () => {
+        const invalidZipCode = '12345678'
+        const url = endpointCep + invalidZipCode
+        const noResultsFoundMessage = 'Nenhum resultado encontrado.'
+        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusUnprocessableEntity)
+                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.body).to.have.property(messageObject)
+                expect(response.body.message).to.eq(noResultsFoundMessage)
+            })
+    })
+
 })
