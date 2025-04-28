@@ -60,7 +60,7 @@ describe('ZIP Code Query API', () => {
         const httpStatusForbidden = 403
         const statusTextForbidden = 'Forbidden'
         const messageForbidden = 'Este token não pode chamar a API cep.'
-        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheQrCodeGenerationApi   )
+        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheQrCodeGenerationApi)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusForbidden)
                 expect(response.statusText).to.eq(statusTextForbidden)
