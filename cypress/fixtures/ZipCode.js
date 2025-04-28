@@ -1,8 +1,8 @@
 class ZipCode {
 
-    constructor(cepWithHyphen, zipCodeWithoutHyphen, state, city, neighborhood, street, complement, ibge) {
-        this.cepWithHyphen = cepWithHyphen
+    constructor(zipCodeWithoutHyphen, zipCodeWithHyphen=null, state=null, city=null, neighborhood=null, street=null, complement=null, ibge=null) {
         this.zipCodeWithoutHyphen = zipCodeWithoutHyphen
+        this.zipCodeWithHyphen = zipCodeWithHyphen
         this.state = state
         this.city = city
         this.neighborhood = neighborhood
