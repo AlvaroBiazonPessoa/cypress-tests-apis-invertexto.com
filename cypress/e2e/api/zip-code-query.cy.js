@@ -17,7 +17,8 @@ describe('ZIP Code Query API', () => {
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
         const httpMethodPost = 'POST'
-        const zipCode = new ZipCode('01001000')
+        const zipCodeWithoutHyphen = '01001000'
+        const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         const httpStatusNotAllowed = 405
         const statusTextNotAllowed = 'Method Not Allowed'
@@ -29,7 +30,8 @@ describe('ZIP Code Query API', () => {
     })
 
     it('Returns ZIP code data without authentication', () => {
-        const zipCode = new ZipCode('30130010')
+        const zipCodeWithoutHyphen = '30130010'
+        const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         cy.api_returnZipCodeDataWithoutAuthentication(httpMethodGet, url, failOnStatusCode)
             .then((response) => {
@@ -43,7 +45,8 @@ describe('ZIP Code Query API', () => {
     it('Returns ZIP code data with an invalid token', () => {
         const invalidToken = Cypress.env('INVALID_TOKEN')
         const InvalidAuthorization = `Bearer ${invalidToken}`
-        const zipCode = new ZipCode('70040010')
+        const zipCodeWithoutHyphen = '70040010'
+        const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, InvalidAuthorization)
             .then((response) => {
@@ -57,7 +60,8 @@ describe('ZIP Code Query API', () => {
     it('Returns ZIP code data without authorization', () => {
         const qrCodeGenerationApiToken = Cypress.env('QR_CODE_GENERATOR_API_TOKEN')
         const authorizationForTheQrCodeGenerationApi = `Bearer ${qrCodeGenerationApiToken}`
-        const zipCode = new ZipCode('80010000')
+        const zipCodeWithoutHyphen = '80010000'
+        const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         const httpStatusForbidden = 403
         const statusTextForbidden = 'Forbidden'
