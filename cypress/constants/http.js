@@ -3,7 +3,7 @@ export const HttpMethod = {
     POST: 'POST'
 }
   
-export const HttpStatusCode = {
+export const HttpStatus = {
     OK: 200,
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
@@ -11,7 +11,7 @@ export const HttpStatusCode = {
     UNPROCESSABLE_ENTIYY: 422
 }
 
-export const HttpMessage = {
+export const HttpStatusText = {
     OK: 'OK',
     UNAUTHORIZED: 'Unauthorized',
     FORBIDDEN: 'Forbidden',
