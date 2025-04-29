@@ -25,5 +25,5 @@ Headless mode:
 npm run cy.headless
 ```
 
-## 👀 Observation
+## 👀 Observations
 Work in progress...
