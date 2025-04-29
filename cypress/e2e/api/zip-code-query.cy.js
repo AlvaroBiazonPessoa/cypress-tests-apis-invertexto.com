@@ -136,8 +136,8 @@ describe('ZIP Code Query API', () => {
      * Observation: Check if the HTTP status code should be 400 instead of 422
      */
     it('Return ZIP code data by sending a ZIP code that does not exist', () => {
-        const invalidZipCode = '12345678'
-        const zipCode = new ZipCode(invalidZipCode)
+        const zipCodeThatDoesNotExist = '12345678'
+        const zipCode = new ZipCode(zipCodeThatDoesNotExist)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         const noResultsFoundMessage = 'Nenhum resultado encontrado.'
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
