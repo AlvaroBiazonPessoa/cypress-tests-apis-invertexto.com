@@ -9,7 +9,14 @@ describe('ZIP Code Query API', () => {
     const authorizationForTheZipCodeQueryApi = `Bearer ${zipCodeQueryApiToken}`
     const httpStatusUnauthorized = 401
     const statusTextUnauthorized = 'Unauthorized'
-    const messageObject = 'message'
+    const keyMessage = 'message'
+    const keyCep = 'cep'
+    const keyState = 'state'
+    const keyCity = 'city'
+    const keyNeighborhood = 'neighborhood'
+    const keyStreet = 'street'
+    const keyComplement = 'complement'
+    const keyIbge = 'ibge'
     const massageUnauthenticated = 'Unauthenticated.'
     const httpStatusUnprocessableEntity = 422
     const statusTextUnprocessableEntity = 'Unprocessable Entity'
@@ -37,7 +44,7 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnauthorized)
                 expect(response.statusText).to.eq(statusTextUnauthorized)
-                expect(response.body).to.have.property(messageObject)
+                expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(massageUnauthenticated)
             })
     })
@@ -52,7 +59,7 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnauthorized)
                 expect(response.statusText).to.eq(statusTextUnauthorized)
-                expect(response.body).to.have.property(messageObject)
+                expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(massageUnauthenticated)
             })
     })
@@ -70,7 +77,7 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusForbidden)
                 expect(response.statusText).to.eq(statusTextForbidden)
-                expect(response.body).to.have.property(messageObject)
+                expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(messageForbidden)
             })
     })
@@ -86,7 +93,7 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
                 expect(response.statusText).to.eq(statusTextUnprocessableEntity)
-                expect(response.body).to.have.property(messageObject)
+                expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(mandatoryFieldMessage)
             })
     })
@@ -102,7 +109,7 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
                 expect(response.statusText).to.eq(statusTextUnprocessableEntity)
-                expect(response.body).to.have.property(messageObject)
+                expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(missingCharacterFieldMessage)
             })
     })
@@ -118,7 +125,7 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
                 expect(response.statusText).to.eq(statusTextUnprocessableEntity)
-                expect(response.body).to.have.property(messageObject)
+                expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(missingCharacterFieldMessage)
             })
     })
@@ -135,7 +142,7 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusUnprocessableEntity)
                 expect(response.statusText).to.eq(statusTextUnprocessableEntity)
-                expect(response.body).to.have.property(messageObject)
+                expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(noResultsFoundMessage)
             })
     })
@@ -150,19 +157,19 @@ describe('ZIP Code Query API', () => {
             .then((response) => {
                 expect(response.status).to.eq(httpStatusOk)
                 expect(response.statusText).to.eq(statusTextOk)
-                expect(response.body).to.have.property('cep')
+                expect(response.body).to.have.property(keyCep)
                 expect(response.body.cep).to.eq(zipCode.zipCodeWithoutHyphen)
-                expect(response.body).to.have.property('state')
+                expect(response.body).to.have.property(keyState)
                 expect(response.body.state).to.eq(zipCode.state)
-                expect(response.body).to.have.property('city')
+                expect(response.body).to.have.property(keyCity)
                 expect(response.body.city).to.eq(zipCode.city)
-                expect(response.body).to.have.property('neighborhood')
+                expect(response.body).to.have.property(keyNeighborhood)
                 expect(response.body.neighborhood).to.eq(zipCode.neighborhood)
-                expect(response.body).to.have.property('street')
+                expect(response.body).to.have.property(keyStreet)
                 expect(response.body.street).to.eq(zipCode.street)
-                expect(response.body).to.have.property('complement')
+                expect(response.body).to.have.property(keyComplement)
                 expect(response.body.complement).to.eq(zipCode.complement)
-                expect(response.body).to.have.property('ibge')
+                expect(response.body).to.have.property(keyIbge)
                 expect(response.body.ibge).to.eq(zipCode.ibge)
             })
     })
