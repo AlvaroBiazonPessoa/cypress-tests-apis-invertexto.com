@@ -26,4 +26,5 @@ npm run cy.headless
 ```
 
 ## 👀 Observations
-Work in progress...
+To run the tests, you must create a **`cypress.env.json`** file based on the **`cypress.env.example.json`** file.<br>
+Also, make sure to generate the API tokens at [⚙ invertexto.com | API](https://api.invertexto.com/)
