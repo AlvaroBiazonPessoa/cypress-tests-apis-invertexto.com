@@ -20,5 +20,8 @@
   "homepage": "https://github.com/AlvaroBiazonPessoa/cypress-tests-apis-invertexto.com#readme",
   "devDependencies": {
     "cypress": "^14.3.2"
+  },
+  "dependencies": {
+    "cypress-plugin-api": "^2.11.2"
   }
 }
