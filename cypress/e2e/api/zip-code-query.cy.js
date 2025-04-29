@@ -9,6 +9,8 @@ describe('ZIP Code Query API', () => {
     const authorizationForTheZipCodeQueryApi = `Bearer ${zipCodeQueryApiToken}`
     const httpStatusUnauthorized = 401
     const statusTextUnauthorized = 'Unauthorized'
+    const httpStatusOk = 200
+    const statusTextOk = 'OK'
     const keyMessage = 'message'
     const keyCep = 'cep'
     const keyState = 'state'
@@ -151,8 +153,6 @@ describe('ZIP Code Query API', () => {
         const zipCode = new ZipCode('66010030', '66010-030', 'PA', 'Belém', 'Campina', 'Praça Dom Macedo Costa', '', '1501402')
         const url = endpointCep + zipCode.zipCodeWithHyphen
         failOnStatusCode = true
-        const httpStatusOk = 200
-        const statusTextOk = 'OK'
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusOk)
@@ -178,8 +178,6 @@ describe('ZIP Code Query API', () => {
         const zipCode = new ZipCode('64000020', '64000-020', 'PI', 'Teresina', 'Centro', 'Avenida Frei Serafim', '', '2211001')
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         failOnStatusCode = true
-        const httpStatusOk = 200
-        const statusTextOk = 'OK'
         cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
                 expect(response.status).to.eq(httpStatusOk)
