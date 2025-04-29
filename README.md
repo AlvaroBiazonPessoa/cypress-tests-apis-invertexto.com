@@ -14,5 +14,16 @@ Repository contains tests for [invertexto.com](https://api.invertexto.com/) APIs
 npm install
 ```
 
-##  ▶ How to run
+## ▶ How to run
+Interactive mode:
+```sh
+npm run cy.interactive
+```
+
+Headless mode:
+```sh
+npm run cy.headless
+```
+
+## 👀 Observation
 Work in progress...
