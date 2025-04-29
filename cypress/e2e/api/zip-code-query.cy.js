@@ -1,21 +1,15 @@
+import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
 const ZipCode = require('../../fixtures/ZipCode')
 
 describe('ZIP Code Query API', () => {
 
     const endpointCep = 'cep/' 
-    const httpMethodGet = 'GET'
     const allowsErrorStatusCode = false
     const doesNotAllowErrorStatusCode = true
     const zipCodeQueryApiToken = Cypress.env('ZIP_CODE_QUERY_API_TOKEN')
     const authorizationForTheZipCodeQueryApi = `Bearer ${zipCodeQueryApiToken}`
-    const httpStatusUnauthorized = 401
-    const statusTextUnauthorized = 'Unauthorized'
     const massageUnauthenticated = 'Unauthenticated.'
-    const httpStatusUnprocessableEntity = 422
-    const statusTextUnprocessableEntity = 'Unprocessable Entity'
     const missingCharacterFieldMessage = 'O campo cep deve conter 8 caracteres.'
-    const httpStatusOk = 200
-    const statusTextOk = 'OK'
     const keyMessage = 'message'
     const keyCep = 'cep'
     const keyState = 'state'
@@ -26,16 +20,13 @@ describe('ZIP Code Query API', () => {
     const keyIbge = 'ibge'
 
     it('Return ZIP code data with an unexpected HTTP method', () => {
-        const httpMethodPost = 'POST'
         const zipCodeWithoutHyphen = '01001000'
         const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        const httpStatusNotAllowed = 405
-        const statusTextNotAllowed = 'Method Not Allowed'
-        cy.api_returnZipCodeData(httpMethodPost, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(HttpMethod.POST, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusNotAllowed)
-                expect(response.statusText).to.eq(statusTextNotAllowed)
+                expect(response.status).to.eq(HttpStatus.NOT_ALLOWED)
+                expect(response.statusText).to.eq(HttpStatusText.NOT_ALLOWED)
             })
     })
 
@@ -43,10 +34,10 @@ describe('ZIP Code Query API', () => {
         const zipCodeWithoutHyphen = '30130010'
         const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        cy.api_returnZipCodeDataWithoutAuthentication(httpMethodGet, url, allowsErrorStatusCode)
+        cy.api_returnZipCodeDataWithoutAuthentication(HttpMethod.GET, url, allowsErrorStatusCode)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusUnauthorized)
-                expect(response.statusText).to.eq(statusTextUnauthorized)
+                expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
+                expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(massageUnauthenticated)
             })
@@ -58,10 +49,10 @@ describe('ZIP Code Query API', () => {
         const zipCodeWithoutHyphen = '70040010'
         const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        cy.api_returnZipCodeData(httpMethodGet, url, allowsErrorStatusCode, invalidAuthorization)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, invalidAuthorization)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusUnauthorized)
-                expect(response.statusText).to.eq(statusTextUnauthorized)
+                expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
+                expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(massageUnauthenticated)
             })
@@ -73,13 +64,11 @@ describe('ZIP Code Query API', () => {
         const zipCodeWithoutHyphen = '80010000'
         const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        const httpStatusForbidden = 403
-        const statusTextForbidden = 'Forbidden'
         const messageForbidden = 'Este token não pode chamar a API cep.'
-        cy.api_returnZipCodeData(httpMethodGet, url, allowsErrorStatusCode, authorizationForTheQrCodeGenerationApi)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheQrCodeGenerationApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusForbidden)
-                expect(response.statusText).to.eq(statusTextForbidden)
+                expect(response.status).to.eq(HttpStatus.FORBIDDEN)
+                expect(response.statusText).to.eq(HttpStatusText.FORBIDDEN)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(messageForbidden)
             })
@@ -89,10 +78,10 @@ describe('ZIP Code Query API', () => {
         const zipCode = new ZipCode(null)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         const mandatoryFieldMessage = 'O campo cep é obrigatório.'
-        cy.api_returnZipCodeData(httpMethodGet, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusUnprocessableEntity)
-                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(mandatoryFieldMessage)
             })
@@ -102,10 +91,10 @@ describe('ZIP Code Query API', () => {
         const zipCodeWithLessThanEightDigits = '4002000'
         const zipCode = new ZipCode(zipCodeWithLessThanEightDigits)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        cy.api_returnZipCodeData(httpMethodGet, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusUnprocessableEntity)
-                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(missingCharacterFieldMessage)
             })
@@ -115,10 +104,10 @@ describe('ZIP Code Query API', () => {
         const zipCodeWithMoreThanEightDigits = '590202000'
         const zipCode = new ZipCode(zipCodeWithMoreThanEightDigits)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        cy.api_returnZipCodeData(httpMethodGet, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusUnprocessableEntity)
-                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(missingCharacterFieldMessage)
             })
@@ -129,10 +118,10 @@ describe('ZIP Code Query API', () => {
         const zipCode = new ZipCode(zipCodeThatDoesNotExist)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
         const noResultsFoundMessage = 'Nenhum resultado encontrado.'
-        cy.api_returnZipCodeData(httpMethodGet, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusUnprocessableEntity)
-                expect(response.statusText).to.eq(statusTextUnprocessableEntity)
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(noResultsFoundMessage)
             })
@@ -141,10 +130,10 @@ describe('ZIP Code Query API', () => {
     it('Return ZIP code data by sending a ZIP code with a hyphen', () => {
         const zipCode = new ZipCode('66010030', '66010-030', 'PA', 'Belém', 'Campina', 'Praça Dom Macedo Costa', '', '1501402')
         const url = endpointCep + zipCode.zipCodeWithHyphen
-        cy.api_returnZipCodeData(httpMethodGet, url, doesNotAllowErrorStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusOk)
-                expect(response.statusText).to.eq(statusTextOk)
+                expect(response.status).to.eq(HttpStatus.OK)
+                expect(response.statusText).to.eq(HttpStatusText.OK)
                 expect(response.body).to.have.property(keyCep)
                 expect(response.body.cep).to.eq(zipCode.zipCodeWithoutHyphen)
                 expect(response.body).to.have.property(keyState)
@@ -165,10 +154,10 @@ describe('ZIP Code Query API', () => {
     it('Return ZIP code data by sending a ZIP code without a hyphen', () => {
         const zipCode = new ZipCode('64000020', '64000-020', 'PI', 'Teresina', 'Centro', 'Avenida Frei Serafim', '', '2211001')
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        cy.api_returnZipCodeData(httpMethodGet, url, doesNotAllowErrorStatusCode, authorizationForTheZipCodeQueryApi)
+        cy.api_returnZipCodeData(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
-                expect(response.status).to.eq(httpStatusOk)
-                expect(response.statusText).to.eq(statusTextOk)
+                expect(response.status).to.eq(HttpStatus.OK)
+                expect(response.statusText).to.eq(HttpStatusText.OK)
                 expect(response.body).to.have.property(keyCep)
                 expect(response.body.cep).to.eq(zipCode.zipCodeWithoutHyphen)
                 expect(response.body).to.have.property(keyState)
