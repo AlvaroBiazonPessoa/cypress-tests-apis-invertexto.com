@@ -1,7 +1,7 @@
 import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
 const ZipCode = require('../../fixtures/ZipCode')
 
-describe('ZIP Code Query API', () => {
+describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
 
     const endpointCep = 'cep/' 
     const allowsErrorStatusCode = false
