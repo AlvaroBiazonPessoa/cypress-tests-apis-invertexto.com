@@ -135,7 +135,7 @@ describe('ZIP Code Query API', () => {
     /**
      * Observation: Check if the HTTP status code should be 400 instead of 422
      */
-    it('Return ZIP code data by sending an invalid ZIP code', () => {
+    it('Return ZIP code data by sending a ZIP code that does not exist', () => {
         const invalidZipCode = '12345678'
         const zipCode = new ZipCode(invalidZipCode)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
