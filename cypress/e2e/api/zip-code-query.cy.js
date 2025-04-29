@@ -174,4 +174,31 @@ describe('ZIP Code Query API', () => {
             })
     })
 
+    it('Return ZIP code data by sending a ZIP code without a hyphen', () => {
+        const zipCode = new ZipCode('64000020', '64000-020', 'PI', 'Teresina', 'Centro', 'Avenida Frei Serafim', '', '2211001')
+        const url = endpointCep + zipCode.zipCodeWithoutHyphen
+        failOnStatusCode = true
+        const httpStatusOk = 200
+        const statusTextOk = 'OK'
+        cy.api_returnZipCodeData(httpMethodGet, url, failOnStatusCode, authorizationForTheZipCodeQueryApi)
+            .then((response) => {
+                expect(response.status).to.eq(httpStatusOk)
+                expect(response.statusText).to.eq(statusTextOk)
+                expect(response.body).to.have.property(keyCep)
+                expect(response.body.cep).to.eq(zipCode.zipCodeWithoutHyphen)
+                expect(response.body).to.have.property(keyState)
+                expect(response.body.state).to.eq(zipCode.state)
+                expect(response.body).to.have.property(keyCity)
+                expect(response.body.city).to.eq(zipCode.city)
+                expect(response.body).to.have.property(keyNeighborhood)
+                expect(response.body.neighborhood).to.eq(zipCode.neighborhood)
+                expect(response.body).to.have.property(keyStreet)
+                expect(response.body.street).to.eq(zipCode.street)
+                expect(response.body).to.have.property(keyComplement)
+                expect(response.body.complement).to.eq(zipCode.complement)
+                expect(response.body).to.have.property(keyIbge)
+                expect(response.body.ibge).to.eq(zipCode.ibge)
+            })
+    })
+
 })
