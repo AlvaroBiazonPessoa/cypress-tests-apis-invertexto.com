@@ -188,4 +188,16 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
             })
     })
 
+    it('Return ZIP code data by sending incorrect base URL', () => {
+        const zipCodeWithoutHyphen = '64000020'
+        const zipCode = new ZipCode(zipCodeWithoutHyphen)
+        const ivalidBaseUrl = 'https://api.invertexto.com.br/v5/'
+        const url = ivalidBaseUrl + endpointCep + zipCode.zipCodeWithoutHyphen
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.NOT_FOUND)
+                expect(response.statusText).to.eq(HttpStatusText.NOT_FOUND)
+            })
+    })
+
 })
