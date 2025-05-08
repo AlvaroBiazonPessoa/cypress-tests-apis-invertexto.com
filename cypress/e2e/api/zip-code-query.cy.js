@@ -10,6 +10,7 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
     const authorizationForTheZipCodeQueryApi = `Bearer ${zipCodeQueryApiToken}`
     const massageUnauthenticated = 'Unauthenticated.'
     const missingCharacterFieldMessage = 'O campo cep deve conter 8 caracteres.'
+    const noResultsFoundMessage = 'Nenhum resultado encontrado.'
     const keyMessage = 'message'
     const keyCep = 'cep'
     const keyState = 'state'
@@ -117,7 +118,6 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
         const zipCodeThatDoesNotExist = '12345678'
         const zipCode = new ZipCode(zipCodeThatDoesNotExist)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        const noResultsFoundMessage = 'Nenhum resultado encontrado.'
         cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
