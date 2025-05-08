@@ -200,4 +200,30 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
             })
     })
 
+    Cypress._.times(20, () => {
+        it('Return ZIP code data 20 times', () => {
+            const zipCode = new ZipCode('64000020', '64000-020', 'PI', 'Teresina', 'Centro', 'Avenida Frei Serafim', '', '2211001')
+            const url = endpointCep + zipCode.zipCodeWithoutHyphen
+            cy.api_returnZipCodeData(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheZipCodeQueryApi)
+                .then((response) => {
+                    expect(response.status).to.eq(HttpStatus.OK)
+                    expect(response.statusText).to.eq(HttpStatusText.OK)
+                    expect(response.body).to.have.property(keyCep)
+                    expect(response.body.cep).to.eq(zipCode.zipCodeWithoutHyphen)
+                    expect(response.body).to.have.property(keyState)
+                    expect(response.body.state).to.eq(zipCode.state)
+                    expect(response.body).to.have.property(keyCity)
+                    expect(response.body.city).to.eq(zipCode.city)
+                    expect(response.body).to.have.property(keyNeighborhood)
+                    expect(response.body.neighborhood).to.eq(zipCode.neighborhood)
+                    expect(response.body).to.have.property(keyStreet)
+                    expect(response.body.street).to.eq(zipCode.street)
+                    expect(response.body).to.have.property(keyComplement)
+                    expect(response.body.complement).to.eq(zipCode.complement)
+                    expect(response.body).to.have.property(keyIbge)
+                    expect(response.body.ibge).to.eq(zipCode.ibge)
+                })
+        })
+    })
+
 })
