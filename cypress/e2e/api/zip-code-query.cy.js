@@ -127,6 +127,19 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
             })
     })
 
+    it('Return ZIP code data by sending a ZIP code with a special character', () => {
+        const zipCodeWithSpecialCharacter = '@-64000020'
+        const zipCode = new ZipCode(zipCodeWithSpecialCharacter)
+        const url = endpointCep + zipCode.zipCodeWithoutHyphen
+        cy.api_returnZipCodeData(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(noResultsFoundMessage)
+            })
+    })
+
     it('Return ZIP code data by sending a ZIP code with a hyphen', () => {
         const zipCode = new ZipCode('66010030', '66010-030', 'PA', 'Belém', 'Campina', 'Praça Dom Macedo Costa', '', '1501402')
         const url = endpointCep + zipCode.zipCodeWithHyphen
