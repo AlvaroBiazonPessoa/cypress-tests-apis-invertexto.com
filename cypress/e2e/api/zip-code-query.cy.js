@@ -30,7 +30,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.NOT_ALLOWED)
                 expect(response.statusText).to.eq(HttpStatusText.NOT_ALLOWED)
-            })
+            }
+        )
     })
 
     it('Returns ZIP code data without authentication', () => {
@@ -43,7 +44,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(massageUnauthenticated)
-            })
+            }
+        )
     })
 
     it('Returns ZIP code data with an invalid token', () => {
@@ -58,7 +60,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(massageUnauthenticated)
-            })
+            }
+        )
     })
 
     it('Returns ZIP code data without authorization', () => {
@@ -74,7 +77,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.FORBIDDEN)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(messageForbidden)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data without sending ZIP code parameter', () => {
@@ -87,7 +91,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(mandatoryFieldMessage)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data by sending a ZIP code with less than eight digits', () => {
@@ -100,7 +105,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(missingCharacterFieldMessage)
-            })
+            }
+        )
     })
 
     it('Returns ZIP code data by sending a ZIP code with more than eight digits', () => {
@@ -113,7 +119,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(missingCharacterFieldMessage)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data by sending a ZIP code that does not exist', () => {
@@ -126,7 +133,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(noResultsFoundMessage)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data by sending a ZIP code with a special character', () => {
@@ -139,7 +147,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(noResultsFoundMessage)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data by sending a ZIP code with a hyphen', () => {
@@ -163,7 +172,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.body.complement).to.eq(zipCode.complement)
                 expect(response.body).to.have.property(keyIbge)
                 expect(response.body.ibge).to.eq(zipCode.ibge)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data by sending a ZIP code without a hyphen', () => {
@@ -187,7 +197,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.body.complement).to.eq(zipCode.complement)
                 expect(response.body).to.have.property(keyIbge)
                 expect(response.body.ibge).to.eq(zipCode.ibge)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data by sending incorrect base URL', () => {
@@ -199,7 +210,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.NOT_FOUND)
                 expect(response.statusText).to.eq(HttpStatusText.NOT_FOUND)
-            })
+            }
+        )
     })
 
     it('Return ZIP code data by checking JSON Schema', () => {
@@ -211,7 +223,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                     expect(response.status).to.eq(HttpStatus.OK)
                     expect(response.statusText).to.eq(HttpStatusText.OK)
                     expect(response.body).to.be.jsonSchema(schema)
-            })
+                }
+            )
         })
     })
 
@@ -237,7 +250,8 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                     expect(response.body.complement).to.eq(zipCode.complement)
                     expect(response.body).to.have.property(keyIbge)
                     expect(response.body.ibge).to.eq(zipCode.ibge)
-                })
+                }
+            )
         })
     })
 
