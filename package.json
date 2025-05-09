@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/AlvaroBiazonPessoa/cypress-tests-apis-invertexto.com#readme",
   "devDependencies": {
+    "chai-json-schema": "^1.5.1",
     "cypress": "^14.3.2",
     "cypress-plugin-api": "^2.11.2"
   }
