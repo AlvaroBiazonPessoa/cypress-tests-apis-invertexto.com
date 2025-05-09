@@ -9,10 +9,10 @@ Cypress.Commands.add('api_makeRequestWithPathParameter', (method, endpointWithPa
     })
 })
 
-Cypress.Commands.add('api_makeRequestWithoutAuthentication', (method, url, failOnStatusCode) => {
+Cypress.Commands.add('api_makeRequestWithoutAuthentication', (method, endpoint, failOnStatusCode) => {
     cy.api({
         method: method,
-        url: url,
+        url: endpoint,
         failOnStatusCode: failOnStatusCode
     })
 })
