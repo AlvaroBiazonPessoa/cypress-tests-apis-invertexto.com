@@ -1,5 +1,7 @@
 import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
 const ZipCode = require('../../fixtures/ZipCode')
+import chaiJsonSchema from 'chai-json-schema'
+chai.use(chaiJsonSchema)
 
 describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
 
@@ -198,6 +200,19 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
                 expect(response.status).to.eq(HttpStatus.NOT_FOUND)
                 expect(response.statusText).to.eq(HttpStatusText.NOT_FOUND)
             })
+    })
+
+    it('Return ZIP code data by checking JSON Schema', () => {
+        const zipCode = new ZipCode('64000020', '64000-020', 'PI', 'Teresina', 'Centro', 'Avenida Frei Serafim', '', '2211001')
+        const url = endpointCep + zipCode.zipCodeWithoutHyphen
+        cy.fixture('zipCodeDetailsJsonSchema.json').then((schema) => {
+            cy.api_returnZipCodeData(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheZipCodeQueryApi)
+                .then((response) => {
+                    expect(response.status).to.eq(HttpStatus.OK)
+                    expect(response.statusText).to.eq(HttpStatusText.OK)
+                    expect(response.body).to.be.jsonSchema(schema)
+            })
+        })
     })
 
     Cypress._.times(20, () => {
