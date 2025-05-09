@@ -1,6 +1,7 @@
 export const HttpMethod = {
     GET: 'GET',
-    POST: 'POST'
+    POST: 'POST',
+    PATCH: 'PATCH'
 }
   
 export const HttpStatus = {
