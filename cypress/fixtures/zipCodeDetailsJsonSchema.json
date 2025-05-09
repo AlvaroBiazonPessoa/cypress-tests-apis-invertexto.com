@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["cep", "state", "city", "neighborhood", "street", "complement", "ibge"],
+    "properties": {
+      "cep": {
+        "type": "string",
+        "pattern": "^[0-9]{8}$"
+      },
+      "state": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 2
+      },
+      "city": {
+        "type": "string"
+      },
+      "neighborhood": {
+        "type": "string"
+      },
+      "street": {
+        "type": "string"
+      },
+      "complement": {
+        "type": "string"
+      },
+      "ibge": {
+        "type": "string",
+        "pattern": "^[0-9]+$"
+      }
+    },
+    "additionalProperties": false
+}
