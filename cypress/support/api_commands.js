@@ -1,4 +1,4 @@
-Cypress.Commands.add('api_returnZipCodeData', (method, url, failOnStatusCode, authorization) => {
+Cypress.Commands.add('api_makeRequestWithPathParameter', (method, url, failOnStatusCode, authorization) => {
     cy.api({
         method: method,
         url: url,
