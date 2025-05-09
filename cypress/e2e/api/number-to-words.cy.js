@@ -7,6 +7,8 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     const allowsErrorStatusCode = false
     const numberToWordsApiToken = Cypress.env('NUMBER_TO_WORDS_API_TOKEN')
     const authorizationForTheNumberToWordsApi = `Bearer ${numberToWordsApiToken}`
+    const keyMessage = 'message'
+    const massageUnauthenticated = 'Unauthenticated.'
 
     it('Return the number in full with an unexpected HTTP method', () => {
         const queryParameter = {
