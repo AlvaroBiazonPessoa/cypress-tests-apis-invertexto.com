@@ -34,7 +34,7 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Returns ZIP code data without authentication', () => {
+    it('Return ZIP code data without authentication', () => {
         const zipCodeWithoutHyphen = '30130010'
         const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
@@ -48,7 +48,7 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Returns ZIP code data with an invalid token', () => {
+    it('Return ZIP code data with an invalid token', () => {
         const invalidToken = Cypress.env('INVALID_TOKEN')
         const invalidAuthorization = `Bearer ${invalidToken}`
         const zipCodeWithoutHyphen = '70040010'
@@ -64,7 +64,7 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Returns ZIP code data without authorization', () => {
+    it('Return ZIP code data without authorization', () => {
         const qrCodeGenerationApiToken = Cypress.env('QR_CODE_GENERATOR_API_TOKEN')
         const authorizationForTheQrCodeGenerationApi = `Bearer ${qrCodeGenerationApiToken}`
         const zipCodeWithoutHyphen = '80010000'
@@ -109,7 +109,7 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Returns ZIP code data by sending a ZIP code with more than eight digits', () => {
+    it('Return ZIP code data by sending a ZIP code with more than eight digits', () => {
         const zipCodeWithMoreThanEightDigits = '590202000'
         const zipCode = new ZipCode(zipCodeWithMoreThanEightDigits)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
