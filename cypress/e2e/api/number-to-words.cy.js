@@ -3,7 +3,6 @@ import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
 describe('Number to Words API', { env: { hideCredentials: true } }, () => {
 
     const endpointNumberToWords = 'number-to-words' 
-    const url = endpointNumberToWords
     const allowsErrorStatusCode = false
     const numberToWordsApiToken = Cypress.env('NUMBER_TO_WORDS_API_TOKEN')
     const authorizationForTheNumberToWordsApi = `Bearer ${numberToWordsApiToken}`
@@ -16,7 +15,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             language: 'pt',
             currency: ''
         }
-        cy.api_makeRequestWithQueryParameter(HttpMethod.PATCH, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.PATCH, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.NOT_ALLOWED)
                 expect(response.statusText).to.eq(HttpStatusText.NOT_ALLOWED)
@@ -25,7 +24,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     })
 
     it('Return the number in full without authentication', () => {
-        cy.api_makeRequestWithoutAuthentication(HttpMethod.GET, url, allowsErrorStatusCode)
+        cy.api_makeRequestWithoutAuthentication(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
                 expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
@@ -43,7 +42,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             language: 'pt',
             currency: ''
         }
-        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, invalidAuthorization, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, invalidAuthorization, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
                 expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
