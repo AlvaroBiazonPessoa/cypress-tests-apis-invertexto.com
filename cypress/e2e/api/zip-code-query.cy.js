@@ -37,7 +37,7 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
         const zipCodeWithoutHyphen = '30130010'
         const zipCode = new ZipCode(zipCodeWithoutHyphen)
         const url = endpointCep + zipCode.zipCodeWithoutHyphen
-        cy.api_returnZipCodeDataWithoutAuthentication(HttpMethod.GET, url, allowsErrorStatusCode)
+        cy.api_makeRequestWithoutAuthentication(HttpMethod.GET, url, allowsErrorStatusCode)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
                 expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
