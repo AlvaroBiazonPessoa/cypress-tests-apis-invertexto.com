@@ -17,10 +17,10 @@ Cypress.Commands.add('api_makeRequestWithoutAuthentication', (method, url, failO
     })
 })
 
-Cypress.Commands.add('api_makeRequestWithQueryParameter', (method, url, failOnStatusCode, authorization, queryParameter) => {
+Cypress.Commands.add('api_makeRequestWithQueryParameter', (method, endpoint, failOnStatusCode, authorization, queryParameter) => {
     cy.api({
         method: method,
-        url: url,
+        url: endpoint,
         failOnStatusCode: failOnStatusCode,
         headers: {
             Authorization: authorization
