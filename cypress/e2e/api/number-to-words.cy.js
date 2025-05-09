@@ -24,4 +24,15 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full without authentication', () => {
+        cy.api_makeRequestWithoutAuthentication(HttpMethod.GET, url, allowsErrorStatusCode)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
+                expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(massageUnauthenticated)
+            }
+        )
+    })
+
 })
