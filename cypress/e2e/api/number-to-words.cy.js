@@ -35,4 +35,22 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full with an invalid token', () => {
+        const invalidToken = Cypress.env('INVALID_TOKEN')
+        const invalidAuthorization = `Bearer ${invalidToken}`
+        const queryParameter = {
+            number: '250',
+            language: 'pt',
+            currency: ''
+        }
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, invalidAuthorization, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
+                expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(massageUnauthenticated)
+            }
+        )
+    })
+
 })
