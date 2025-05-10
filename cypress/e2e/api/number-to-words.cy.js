@@ -89,13 +89,13 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             language: 'pt',
             currency: ''
         }
-        const message = 'O campo number é obrigatório.'
+        const mandatoryNnameParameterMessage = 'O campo number é obrigatório.'
         cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
-                expect(response.body.message).to.eq(message)
+                expect(response.body.message).to.eq(mandatoryNnameParameterMessage)
             }
         )
     })
