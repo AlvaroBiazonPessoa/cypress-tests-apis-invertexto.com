@@ -52,4 +52,23 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full without authorization', () => {
+        const zipCodeQueryApiToken = Cypress.env('ZIP_CODE_QUERY_API_TOKEN')
+        const authorizationForTheZipCodeQueryApi = `Bearer ${zipCodeQueryApiToken}`
+        const queryParameter = {
+            number: '250',
+            language: 'pt',
+            currency: ''
+        }
+        const messageForbidden = 'Este token não pode chamar a API number-to-words.'
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.FORBIDDEN)
+                expect(response.statusText).to.eq(HttpStatusText.FORBIDDEN)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(messageForbidden)
+            }
+        )
+    })
+
 })
