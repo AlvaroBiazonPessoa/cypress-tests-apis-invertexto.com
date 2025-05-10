@@ -100,4 +100,20 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full without sending the language parameter', () => {
+        const queryParameter = {
+            number: '260',
+            currency: ''
+        }
+        const mandatoryLanguageParameterMessage = 'O campo language é obrigatório.'
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(mandatoryLanguageParameterMessage)
+            }
+        )
+    })
+
 })
