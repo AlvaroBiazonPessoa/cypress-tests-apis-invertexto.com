@@ -1,13 +1,16 @@
 import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
+const Number = require('../../fixtures/Number')
 
 describe('Number to Words API', { env: { hideCredentials: true } }, () => {
 
     const endpointNumberToWords = 'number-to-words' 
     const allowsErrorStatusCode = false
+    const doesNotAllowErrorStatusCode = true
     const numberToWordsApiToken = Cypress.env('NUMBER_TO_WORDS_API_TOKEN')
     const authorizationForTheNumberToWordsApi = `Bearer ${numberToWordsApiToken}`
     const keyMessage = 'message'
     const massageUnauthenticated = 'Unauthenticated.'
+    const keyText = 'text'
 
     it('Return the number in full with an unexpected HTTP method', () => {
         const queryParameter = {
@@ -112,6 +115,22 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
                 expect(response.body.message).to.eq(mandatoryLanguageParameterMessage)
+            }
+        )
+    })
+
+    it('Return the number in full without sending the currency parameter', () => {
+        const number = new Number('250', 'duzentos e cinquenta', 'pt')
+        const queryParameter = {
+            number: number.number,
+            language: number.language
+        }
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, doesNotAllowErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.OK)
+                expect(response.statusText).to.eq(HttpStatusText.OK)
+                expect(response.body).to.have.property(keyText)
+                expect(response.body.text).to.eq(number.numberInFull)
             }
         )
     })
