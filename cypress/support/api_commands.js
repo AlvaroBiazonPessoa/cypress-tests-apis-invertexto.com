@@ -1,7 +1,7 @@
-Cypress.Commands.add('api_makeRequestWithPathParameter', (method, endpointWithPathParameter, failOnStatusCode, authorization) => {
+Cypress.Commands.add('api_makeRequestWithPathParameter', (method, url, failOnStatusCode, authorization) => {
     cy.api({
         method: method,
-        url: endpointWithPathParameter,
+        url: url,
         failOnStatusCode: failOnStatusCode,
         headers: {
             Authorization: authorization
