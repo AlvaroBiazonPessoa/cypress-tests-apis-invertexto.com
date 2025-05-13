@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cy.interactive": "cypress open",
-    "cy.headless": "cypress run"
+    "cy.headless.dev": "cypress run --env configFile=dev",
+    "cy.headless.qa": "cypress run --env configFile=qa",
+    "cy.headless.hml": "cypress run --env configFile=hml",
+    "cy.interactive.dev": "cypress open --env configFile=dev",
+    "cy.interactive.qa": "cypress open --env configFile=qa",
+    "cy.interactive.hml": "cypress open --env configFile=hml"
   },
   "repository": {
     "type": "git",
