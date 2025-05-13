@@ -13,10 +13,11 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     const keyText = 'text'
 
     it('Return the number in full with an unexpected HTTP method', () => {
+        const number = new Number('250', 'duzentos e cinquenta', 'pt', '')
         const queryParameter = {
-            number: '250',
-            language: 'pt',
-            currency: ''
+            number: number.number,
+            language: number.language,
+            currency: number.currency
         }
         cy.api_makeRequestWithQueryParameter(HttpMethod.PATCH, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
@@ -40,10 +41,11 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     it('Return the number in full with an invalid token', () => {
         const invalidToken = Cypress.env('INVALID_TOKEN')
         const invalidAuthorization = `Bearer ${invalidToken}`
+        const number = new Number('250', 'duzentos e cinquenta', 'pt', '')
         const queryParameter = {
-            number: '250',
-            language: 'pt',
-            currency: ''
+            number: number.number,
+            language: number.language,
+            currency: number.currency
         }
         cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, invalidAuthorization, queryParameter)
             .then((response) => {
@@ -58,10 +60,11 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     it('Return the number in full without authorization', () => {
         const zipCodeQueryApiToken = Cypress.env('ZIP_CODE_QUERY_API_TOKEN')
         const authorizationForTheZipCodeQueryApi = `Bearer ${zipCodeQueryApiToken}`
+        const number = new Number('250', 'duzentos e cinquenta', 'pt', '')
         const queryParameter = {
-            number: '250',
-            language: 'pt',
-            currency: ''
+            number: number.number,
+            language: number.language,
+            currency: number.currency
         }
         const messageForbidden = 'Este token não pode chamar a API number-to-words.'
         cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi, queryParameter)
@@ -88,9 +91,10 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     })
 
     it('Return the number in full without sending the number parameter', () => {
+        const number = new Number(null, null, 'pt', '')
         const queryParameter = {
-            language: 'pt',
-            currency: ''
+            language: number.language,
+            currency: number.currency
         }
         const mandatoryNameParameterMessage = 'O campo number é obrigatório.'
         cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
@@ -104,9 +108,10 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     })
 
     it('Return the number in full without sending the language parameter', () => {
+        const number = new Number('250', 'duzentos e cinquenta', null, '')
         const queryParameter = {
-            number: '260',
-            currency: ''
+            number: number.number,
+            currency: number.currency
         }
         const mandatoryLanguageParameterMessage = 'O campo language é obrigatório.'
         cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
