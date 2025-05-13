@@ -3,6 +3,7 @@ package-lock.json
 cypress.env.dev.json
 cypress.env.qa.json
 cypress.env.hml.json
+cypress.env.prod.json
 cypress/screenshots/
 cypress/videos/
 cypress/downloads/
