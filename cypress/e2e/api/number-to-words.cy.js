@@ -3,7 +3,9 @@ const Number = require('../../fixtures/Number')
 
 describe('Number to Words API', { env: { hideCredentials: true } }, () => {
 
-    const endpointNumberToWords = 'number-to-words' 
+    const baseUrl = Cypress.env('BASE_URL')
+    const endpointNumberToWords = 'number-to-words'  
+    const url = baseUrl + endpointNumberToWords
     const allowsErrorStatusCode = false
     const doesNotAllowErrorStatusCode = true
     const numberToWordsApiToken = Cypress.env('NUMBER_TO_WORDS_API_TOKEN')
@@ -19,7 +21,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             language: number.language,
             currency: number.currency
         }
-        cy.api_makeRequestWithQueryParameter(HttpMethod.PATCH, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.PATCH, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.NOT_ALLOWED)
                 expect(response.statusText).to.eq(HttpStatusText.NOT_ALLOWED)
@@ -28,7 +30,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     })
 
     it('Return the number in full without authentication', () => {
-        cy.api_makeRequestWithoutAuthentication(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode)
+        cy.api_makeRequestWithoutAuthentication(HttpMethod.GET, url, allowsErrorStatusCode)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
                 expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
@@ -47,7 +49,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             language: number.language,
             currency: number.currency
         }
-        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, invalidAuthorization, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, invalidAuthorization, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
                 expect(response.statusText).to.eq(HttpStatusText.UNAUTHORIZED)
@@ -67,7 +69,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             currency: number.currency
         }
         const messageForbidden = 'Este token não pode chamar a API number-to-words.'
-        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheZipCodeQueryApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.FORBIDDEN)
                 expect(response.statusText).to.eq(HttpStatusText.FORBIDDEN)
@@ -80,7 +82,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     it('Return the number in full without sending the mandatory parameters', () => {
         const queryParameter = null
         const mandatoryParametersMessage = 'Os campos number e language são obrigatórios.'
-        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
@@ -97,7 +99,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             currency: number.currency
         }
         const mandatoryNameParameterMessage = 'O campo number é obrigatório.'
-        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
@@ -114,7 +116,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             currency: number.currency
         }
         const mandatoryLanguageParameterMessage = 'O campo language é obrigatório.'
-        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
@@ -130,7 +132,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             number: number.number,
             language: number.language
         }
-        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, endpointNumberToWords, doesNotAllowErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.OK)
                 expect(response.statusText).to.eq(HttpStatusText.OK)
