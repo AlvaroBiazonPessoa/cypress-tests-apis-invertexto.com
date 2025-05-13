@@ -1,6 +1,8 @@
 node_modules/
 package-lock.json
-cypress.env.json
+cypress.env.dev.json
+cypress.env.qa.json
+cypress.env.hml.json
 cypress/screenshots/
 cypress/videos/
 cypress/downloads/
