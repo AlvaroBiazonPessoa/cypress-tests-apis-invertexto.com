@@ -7,9 +7,11 @@
     "cy.headless.dev": "cypress run --env configFile=dev",
     "cy.headless.qa": "cypress run --env configFile=qa",
     "cy.headless.hml": "cypress run --env configFile=hml",
+    "cy.headless.prod": "cypress run --env configFile=prod",
     "cy.interactive.dev": "cypress open --env configFile=dev",
     "cy.interactive.qa": "cypress open --env configFile=qa",
-    "cy.interactive.hml": "cypress open --env configFile=hml"
+    "cy.interactive.hml": "cypress open --env configFile=hml",
+    "cy.interactive.prod": "cypress open --env configFile=prod"
   },
   "repository": {
     "type": "git",
