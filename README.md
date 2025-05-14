@@ -15,6 +15,8 @@ npm install
 ```
 
 ## ▶ How to run
+Test execution environments: **dev, qa, hml,** and **prod**
+
 Interactive mode:
 ```sh
 npm run cy.interactive.<environment>
@@ -26,5 +28,5 @@ npm run cy.headless.<environment>
 ```
 
 ## 👀 Observations
-To run the tests, you must create a file for each environment **(dev, qa, hml, and prod)**, for example: **`cypress.env.dev.json`**, based on the file **`cypress.env.environment.example.json`**<br>
+To run the tests, you must create a file for each environment, for example:**`cypress.env.dev.json`**, based on the file **`cypress.env.environment.example.json`**<br>
 Also, make sure to generate the API tokens at [⚙ invertexto.com | API](https://api.invertexto.com/)
