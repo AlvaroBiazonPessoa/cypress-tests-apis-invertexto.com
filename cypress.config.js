@@ -14,7 +14,8 @@ function getEnvConfig(envName) {
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      const envName = config.env.configFile || "dev"
+      require('@cypress/grep/src/plugin')(config)
+      const envName = config.env.configFile || "prod"
       const customEnv = getEnvConfig(envName)
       config.env = { ...config.env, ...customEnv }
       return config
