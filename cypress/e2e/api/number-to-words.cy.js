@@ -143,7 +143,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     })
 
     it('Return the number in full by sending the parameter number with the primitive type number', { tags: ['@ID-09', '@data'] }, () => {
-        const number = new Number(1000, 'duzentos e cinquenta', 'pt')
+        const number = new Number(1000, 'um mil', 'pt')
         const queryParameter = {
             number: number.number,
             language: number.language
