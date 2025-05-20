@@ -13,6 +13,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     const keyMessage = 'message'
     const massageUnauthenticated = 'Unauthenticated.'
     const keyText = 'text'
+    const incorrectNumberFieldPrimitiveTypeMessage = 'O campo number deve ser do tipo string.'
 
     it('Return the number in full with an unexpected HTTP method', { tags: ['@ID-01', '@verbs'] }, () => {
         const number = new Number('250', 'duzentos e cinquenta', 'pt', '')
@@ -148,13 +149,28 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
             number: number.number,
             language: number.language
         }
-        const incorrectFieldTypeMessage = 'O campo number deve ser do tipo string.'
         cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
                 expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
                 expect(response.body).to.have.property(keyMessage)
-                expect(response.body.message).to.eq(incorrectFieldTypeMessage)
+                expect(response.body.message).to.eq(incorrectNumberFieldPrimitiveTypeMessage)
+            }
+        )
+    })
+
+    it('Return the number in full by sending the parameter number with the primitive type negative number', { tags: ['@ID-10', '@data'] }, () => {
+        const number = new Number(-1, 'um mil negativo', 'pt')
+        const queryParameter = {
+            number: number.number,
+            language: number.language
+        }
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(incorrectNumberFieldPrimitiveTypeMessage)
             }
         )
     })
