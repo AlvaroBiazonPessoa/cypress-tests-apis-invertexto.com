@@ -1,5 +1,5 @@
 import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
-const Number = require('../../support/Number')
+const Number = require('../../support/entities/Number')
 
 describe('Number to Words API', { env: { hideCredentials: true } }, () => {
 

@@ -1,5 +1,5 @@
 import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
-const ZipCode = require('../../support/ZipCode')
+const ZipCode = require('../../support/entities/ZipCode')
 import chaiJsonSchema from 'chai-json-schema'
 chai.use(chaiJsonSchema)
 
