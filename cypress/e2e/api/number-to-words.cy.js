@@ -1,5 +1,5 @@
 import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
-const Number = require('../../fixtures/Number')
+const Number = require('../../support/Number')
 
 describe('Number to Words API', { env: { hideCredentials: true } }, () => {
 
@@ -14,7 +14,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
     const massageUnauthenticated = 'Unauthenticated.'
     const keyText = 'text'
 
-    it('Return the number in full with an unexpected HTTP method', () => {
+    it('Return the number in full with an unexpected HTTP method', { tags: ['@ID-01', '@verbs'] }, () => {
         const number = new Number('250', 'duzentos e cinquenta', 'pt', '')
         const queryParameter = {
             number: number.number,
@@ -29,7 +29,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full without authentication', () => {
+    it('Return the number in full without authentication', { tags: ['@ID-02', '@authentication'] }, () => {
         cy.api_makeRequestWithoutAuthentication(HttpMethod.GET, url, allowsErrorStatusCode)
             .then((response) => {
                 expect(response.status).to.eq(HttpStatus.UNAUTHORIZED)
@@ -40,7 +40,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full with an invalid token', () => {
+    it('Return the number in full with an invalid token', { tags: ['@ID-03', '@authentication'] }, () => {
         const invalidToken = Cypress.env('INVALID_TOKEN')
         const invalidAuthorization = `Bearer ${invalidToken}`
         const number = new Number('250', 'duzentos e cinquenta', 'pt', '')
@@ -59,7 +59,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full without authorization', () => {
+    it('Return the number in full without authorization', { tags: ['@ID-04', '@authorization'] }, () => {
         const zipCodeQueryApiToken = Cypress.env('ZIP_CODE_QUERY_API_TOKEN')
         const authorizationForTheZipCodeQueryApi = `Bearer ${zipCodeQueryApiToken}`
         const number = new Number('250', 'duzentos e cinquenta', 'pt', '')
@@ -79,7 +79,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full without sending the mandatory parameters', () => {
+    it('Return the number in full without sending the mandatory parameters', { tags: ['@ID-05', '@data'] }, () => {
         const queryParameter = null
         const mandatoryParametersMessage = 'Os campos number e language são obrigatórios.'
         cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
@@ -92,7 +92,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full without sending the number parameter', () => {
+    it('Return the number in full without sending the number parameter', { tags: ['@ID-06', '@data'] }, () => {
         const number = new Number(null, null, 'pt', '')
         const queryParameter = {
             language: number.language,
@@ -109,7 +109,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full without sending the language parameter', () => {
+    it('Return the number in full without sending the language parameter', { tags: ['@ID-07', '@data'] }, () => {
         const number = new Number('250', 'duzentos e cinquenta', null, '')
         const queryParameter = {
             number: number.number,
@@ -126,7 +126,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full without sending the currency parameter', () => {
+    it('Return the number in full without sending the currency parameter', { tags: ['@ID-08', '@data'] }, () => {
         const number = new Number('250', 'duzentos e cinquenta', 'pt')
         const queryParameter = {
             number: number.number,
