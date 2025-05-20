@@ -142,4 +142,21 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full by sending the parameter number with the primitive type number', { tags: ['@ID-09', '@data'] }, () => {
+        const number = new Number(1000, 'duzentos e cinquenta', 'pt')
+        const queryParameter = {
+            number: number.number,
+            language: number.language
+        }
+        const incorrectFieldTypeMessage = 'O campo number deve ser do tipo string.'
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(incorrectFieldTypeMessage)
+            }
+        )
+    })
+
 })
