@@ -1,4 +1,4 @@
-import { HttpMethod, HttpStatus, HttpStatusText } from '../../constants/http'
+import { HttpMethod, HttpStatus, HttpStatusText } from '../../support/constants/http'
 const ZipCode = require('../../support/entities/ZipCode')
 import chaiJsonSchema from 'chai-json-schema'
 chai.use(chaiJsonSchema)
