@@ -219,7 +219,7 @@ describe('ZIP Code Query API', { env: { hideCredentials: true } }, () => {
     it('Return ZIP code data by checking JSON Schema', { tags: ['@ID-13', '@data'] }, () => {
         const zipCode = new ZipCode('64000020', '64000-020', 'PI', 'Teresina', 'Centro', 'Avenida Frei Serafim', '', '2211001')
         const url = baseUrlWithEndpointCep + zipCode.zipCodeWithoutHyphen
-        cy.fixture('zipCodeDetailsJsonSchema.json').then((schema) => {
+        cy.fixture('./schemas/zipCodeDetailsJsonSchema.json').then((schema) => {
             cy.api_makeRequestWithPathParameter(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheZipCodeQueryApi)
                 .then((response) => {
                     expect(response.status).to.eq(HttpStatus.OK)
