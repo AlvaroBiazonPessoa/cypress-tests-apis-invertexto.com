@@ -175,4 +175,21 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full by sending the number parameter written in words', { tags: ['@ID-11', '@data'] }, () => {
+        const number = new Number('zero', 'zero', 'pt')
+        const queryParameter = {
+            number: number.number,
+            language: number.language
+        }
+        const numberFieldMustBeNumericMessage = 'O campo number deve conter um valor numérico.'
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(numberFieldMustBeNumericMessage)
+            }
+        )
+    })
+
 })
