@@ -209,7 +209,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it.only('Return the number in full by sending the Albanian language', { tags: ['@ID-13', '@data'] }, () => {
+    it('Return the number in full by sending the Albanian language', { tags: ['@ID-13', '@data'] }, () => {
         const number = new Number('10', 'dhjetë', 'al')
         const queryParameter = {
             number: number.number,
