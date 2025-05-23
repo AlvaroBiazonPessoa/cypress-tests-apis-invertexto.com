@@ -192,4 +192,21 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full by sending a non-existent language', { tags: ['@ID-12', '@data'] }, () => {
+        const number = new Number('22', 'vinte e dois', 'ba')
+        const queryParameter = {
+            number: number.number,
+            language: number.language
+        }
+        const invalidLanguageMessage = 'Valor inválido para o campo language.'
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, allowsErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.UNPROCESSABLE_ENTIYY)
+                expect(response.statusText).to.eq(HttpStatusText.UNPROCESSABLE_ENTIYY)
+                expect(response.body).to.have.property(keyMessage)
+                expect(response.body.message).to.eq(invalidLanguageMessage)
+            }
+        )
+    })
+
 })
