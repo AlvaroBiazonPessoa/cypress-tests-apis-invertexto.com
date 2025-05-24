@@ -273,4 +273,20 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
+    it('Return the number in full by sending the Danish language', { tags: ['@ID-17', '@data'] }, () => {
+        const number = new Number('14', 'fjorten', 'dk')
+        const queryParameter = {
+            number: number.number,
+            language: number.language
+        }
+        cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+            .then((response) => {
+                expect(response.status).to.eq(HttpStatus.OK)
+                expect(response.statusText).to.eq(HttpStatusText.OK)
+                expect(response.body).to.have.property(keyText)
+                expect(response.body.text).to.eq(number.numberInFull)
+            }
+        )
+    })
+
 })
