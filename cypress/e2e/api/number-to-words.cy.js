@@ -1,5 +1,7 @@
 import { HttpMethod, HttpStatus, HttpStatusText } from '../../support/constants/http'
 const Number = require('../../support/entities/Number')
+import chaiJsonSchema from 'chai-json-schema'
+chai.use(chaiJsonSchema)
 
 describe('Number to Words API', { env: { hideCredentials: true } }, () => {
 
@@ -559,6 +561,23 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
                 expect(response.body.text).to.eq(number.numberInFull)
             }
         )
+    })
+
+    it('Return the number in full by checking JSON Schema', { tags: ['@ID-X', '@data'] }, () => {
+        const number = new Number('1', 'um', 'pt')
+        const queryParameter = {
+            number: number.number,
+            language: number.language
+        }
+        cy.fixture('./schemas/numberInFullSchema.json').then((schema) => {
+            cy.api_makeRequestWithQueryParameter(HttpMethod.GET, url, doesNotAllowErrorStatusCode, authorizationForTheNumberToWordsApi, queryParameter)
+                .then((response) => {
+                    expect(response.status).to.eq(HttpStatus.OK)
+                    expect(response.statusText).to.eq(HttpStatusText.OK)
+                    expect(response.body).to.be.jsonSchema(schema)
+                }
+            )
+        })
     })
 
 
