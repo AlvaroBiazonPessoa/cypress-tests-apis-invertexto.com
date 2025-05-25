@@ -417,7 +417,7 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full by sending the Malay language', { tags: ['@ID-25', '@data'] }, () => {
+    it('Return the number in full by sending the Malay language', { tags: ['@ID-26', '@data'] }, () => {
         const number = new Number('23', 'dua puluh tiga', 'ms')
         const queryParameter = {
             number: number.number,
