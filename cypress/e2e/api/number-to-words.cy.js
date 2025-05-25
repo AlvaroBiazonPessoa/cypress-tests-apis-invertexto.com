@@ -513,8 +513,8 @@ describe('Number to Words API', { env: { hideCredentials: true } }, () => {
         )
     })
 
-    it('Return the number in full by sending the Turkmen language', { tags: ['@ID-32', '@data'] }, () => {
-        const number = new Number('29', 'ýigrimi dokuz', 'tk')
+    it('Return the number in full by sending the Turkish language', { tags: ['@ID-32', '@data'] }, () => {
+        const number = new Number('30', 'otuz', 'tr')
         const queryParameter = {
             number: number.number,
             language: number.language
